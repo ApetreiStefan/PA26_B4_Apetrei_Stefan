@@ -7,11 +7,11 @@ import Roads.*;
 public class Map { // Clasa BestRoute.Map modeleaza o instanta a problemei
     ArrayList<Location> locations = new ArrayList<>();
     ArrayList<Road> roads = new ArrayList<>();
-//-------------------------------------------------
+    //-------------------------------------------------
     public Map(){
-        
+
     }
-//-------------------------------------------------
+    //-------------------------------------------------
     public void addLocation(Location l){
         for(Location i : locations){
             if(i.equals(l)){
@@ -44,14 +44,14 @@ public class Map { // Clasa BestRoute.Map modeleaza o instanta a problemei
         }
         return true; // alte verificari sunt facute in constructorii claselor respective
     }
-/**
- * Returns true if location2 can be reached from location1 using the roads
- * This method uses Dijkstra's algorithm and is a recursive function
- * After this method you must use "resetVisits()", otherwise locations will remain visited
- * @param l1 The start location of the algorithm
- * @param l2 The end location of the algorithm / the one we are trying to reach
- * @return true if it succeeds and false if it doesn't
- */
+    /**
+     * Returns true if location2 can be reached from location1 using the roads
+     * This method uses Dijkstra's algorithm and is a recursive function
+     * After this method you must use "resetVisits()", otherwise locations will remain visited
+     * @param l1 The start location of the algorithm
+     * @param l2 The end location of the algorithm / the one we are trying to reach
+     * @return true if it succeeds and false if it doesn't
+     */
     public boolean canReach(Location l1, Location l2){ // canReach este o functie recursiva care aplica djkstra de la l1 pana la l2
         boolean answer = false;
         if(l1.isVisited()) return false; // conditie de oprire
@@ -79,4 +79,55 @@ public class Map { // Clasa BestRoute.Map modeleaza o instanta a problemei
             l.setVisited(false);
         }
     }
+
+    public void shortestRoute(Location l1, Location l2, Solution sol, ArrayList<Road> pathSoFar){
+        if(pathSoFar == null) pathSoFar = new ArrayList<>();
+        findRoad(l1, l2, sol, pathSoFar, true);
+        resetVisits();
+    }
+
+    public void fastestRoute(Location l1, Location l2, Solution sol){
+        ArrayList<Road> pathSoFar = new ArrayList<>();
+        findRoad(l1, l2, sol, pathSoFar, false);
+        resetVisits();
+    }
+
+    private void findRoad(Location current, Location destination, Solution sol, ArrayList<Road> pathSoFar, boolean isShortest){
+        if(current.equals(destination)){
+            if(sol.getRoads().isEmpty() || isBetter(pathSoFar, sol.getRoads(), isShortest)){
+                sol.setRoads(new ArrayList<>(pathSoFar));
+            }
+            return;
+        }
+
+        current.setVisited(true);
+
+        for(Road r : roads){
+            Location next = null;
+            if(r.getLocation1() == current) next = r.getLocation2();
+            else if(r.getLocation2() == current) next = r.getLocation1();
+
+            if(next != null && !next.isVisited()){
+                pathSoFar.add(r);
+                findRoad(next, destination, sol, pathSoFar, isShortest);
+                pathSoFar.remove(pathSoFar.size() - 1);
+            }
+        }
+
+        current.setVisited(false);
+    }
+
+    private boolean isBetter(ArrayList<Road> newPath, ArrayList<Road> oldPath, boolean isShortest){
+        double newCost = 0, oldCost = 0;
+
+        for(Road r : newPath){
+            newCost += isShortest ? r.getLengthKM() : (double)r.getLengthKM() / r.getSpeedLimmitKMH();
+        }
+        for(Road r : oldPath){
+            oldCost += isShortest ? r.getLengthKM() : (double)r.getLengthKM() / r.getSpeedLimmitKMH();
+        }
+
+        return newCost < oldCost;
+    }
+
 }
