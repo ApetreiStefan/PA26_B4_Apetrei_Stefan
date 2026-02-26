@@ -21,9 +21,12 @@ public class Matrix2D{
 
         if(temp > 100){
             System.out.println(String.format("Numar mare, nu mai afisam " + (System.nanoTime() - startTime)));
+            return;
         }
 
-        m.print(); // folosesc intellij si am rulat folosind "run configurations"
+            m.print(); // folosesc intellij si am rulat folosind "run configurations"
+
+
 
     }
 
