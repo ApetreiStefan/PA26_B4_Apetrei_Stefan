@@ -82,12 +82,14 @@ public class Map { // Clasa BestRoute.Map modeleaza o instanta a problemei
 
     public void shortestRoute(Location l1, Location l2, Solution sol, ArrayList<Road> pathSoFar){
         if(pathSoFar == null) pathSoFar = new ArrayList<>();
+        sol.setRoads(new ArrayList<>());
         findRoad(l1, l2, sol, pathSoFar, true);
         resetVisits();
     }
 
     public void fastestRoute(Location l1, Location l2, Solution sol){
         ArrayList<Road> pathSoFar = new ArrayList<>();
+        sol.setRoads(new ArrayList<>());
         findRoad(l1, l2, sol, pathSoFar, false);
         resetVisits();
     }
@@ -121,13 +123,41 @@ public class Map { // Clasa BestRoute.Map modeleaza o instanta a problemei
         double newCost = 0, oldCost = 0;
 
         for(Road r : newPath){
-            newCost += isShortest ? r.getLengthKM() : (double)r.getLengthKM() / r.getSpeedLimmitKMH();
+            if(isShortest) newCost += r.getLengthKM();
+            else newCost += (double)r.getLengthKM() / r.getSpeedLimmitKMH();
         }
         for(Road r : oldPath){
-            oldCost += isShortest ? r.getLengthKM() : (double)r.getLengthKM() / r.getSpeedLimmitKMH();
+            if(isShortest) oldCost += r.getLengthKM();
+            else oldCost += (double)r.getLengthKM() / r.getSpeedLimmitKMH();
         }
 
         return newCost < oldCost;
+    }
+    public void generateRandomInstance(int numLocations, int numRoadsPerLocation) {
+        java.util.Random rand = new java.util.Random();
+        RoadType[] types = RoadType.values();
+
+        for (int i = 0; i < numLocations; i++) {
+            this.addLocation(new City("City " + i, rand.nextInt(1000), rand.nextInt(1000)));
+        }
+
+        for (int i = 0; i < numLocations; i++) {
+            Location l1 = locations.get(i);
+            for (int j = 0; j < numRoadsPerLocation; j++) {
+                Location l2 = locations.get(rand.nextInt(numLocations));
+
+                if (l1 != l2) {
+                    RoadType type = types[rand.nextInt(types.length)];
+                    int distanta = (int) Math.sqrt(
+                            Math.pow(l1.getCoordinates().getX() - l2.getCoordinates().getX(), 2) +
+                                    Math.pow(l1.getCoordinates().getY() - l2.getCoordinates().getY(), 2)
+                    );
+
+                    int length = distanta + rand.nextInt(100) + 1;
+                    this.addRoad(new Road(type, length, l1, l2));
+                }
+            }
+        }
     }
 
 }

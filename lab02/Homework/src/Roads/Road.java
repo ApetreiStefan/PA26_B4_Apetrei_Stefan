@@ -37,17 +37,17 @@ public class Road {
         switch(type){
             case HIGHWAY:
             {
-                this.speedLimmitKMH = 130;
+                this.speedLimmitKMH = 2000; // nu se observa diferenta altfel
                 break;
             }
             case EUROPEAN:
             {
-                this.speedLimmitKMH = 100;
+                this.speedLimmitKMH = 1000;
                 break;
             }
             case NATIONAL:
             {
-                this.speedLimmitKMH = 90;
+                this.speedLimmitKMH = 50;
                 break;
             }
             default:

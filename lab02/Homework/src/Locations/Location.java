@@ -47,28 +47,19 @@ public sealed abstract class Location permits City, Airport, GasStation  {
 //Verificam pentru fiecare tip de Location daca e egal cu cel original
         switch(other){
             case City city: {
-                if(
-                        this instanceof City &&
+                return this instanceof City &&
                         this.name.equals(city.getName()) &&
-                        this.coordinates.equals(city.getCoordinates())
-                ) return true;
-                return false;
+                        this.coordinates.equals(city.getCoordinates());
             }
             case Airport airport:{
-                if(
-                        this instanceof Airport &&
+                return this instanceof Airport &&
                         this.name.equals(airport.getName()) &&
-                        this.coordinates.equals(airport.getCoordinates())
-                ) return true;
-                return false;
+                        this.coordinates.equals(airport.getCoordinates());
             }
             case GasStation gasStation:{
-                if(
-                        this instanceof GasStation &&
+                return this instanceof GasStation &&
                         this.name.equals(gasStation.getName()) &&
-                        this.coordinates.equals(gasStation.getCoordinates())
-                ) return true;
-                return false;
+                        this.coordinates.equals(gasStation.getCoordinates());
             }
             default: return false;
         }
