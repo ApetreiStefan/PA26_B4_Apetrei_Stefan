@@ -1,6 +1,6 @@
 import People.*;
 import java.util.ArrayList;
-import java.util.Collections;
+
 public class Main{
 
     public static void main(String[] args){
@@ -38,7 +38,7 @@ public class Main{
 //            System.out.println(it.getID() + " " + it.getName());
 //        }
     //HOMEWORK
-//    SocialNetwork network = new SocialNetwork();
+//    People.SocialNetwork network = new People.SocialNetwork();
 //
 //    network.addProfile(new Company("Amazon")); // ID 0
 //    network.addProfile(new Company("BitDefender")); // ID 1
@@ -50,6 +50,21 @@ public class Main{
 //
 //    network.print();
     //ADVANCED
+    SocialNetwork network = new SocialNetwork();
 
+    network.addProfile(new Company("Amazon")); // ID 0
+    network.addProfile(new Company("BitDefender")); // ID 1
+    network.addProfile(new Designer("Dan"));  // ID 2
+    network.addProfile(new Programmer("Maria")); // ID 3
+
+    network.addRelationship(0, 1);
+    network.addRelationship(0, 3);
+
+    ArticulationPoints ap = new ArticulationPoints(network.getProfiles());
+    ArrayList<Profile> cutVertexes = ap.find();
+
+    for(Profile it : cutVertexes){
+        System.out.println(it.toString());
+    }
     }
 }

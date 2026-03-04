@@ -44,6 +44,8 @@ public class Person implements Comparable<Person>, Profile {
         return "Profilul (ID:" + ID + " Nume:" + name + ")";
     }
 
+    public TreeMap<Integer, Profile> getConnections(){return connections;}
+
     public int getBirthDay() {
         return birthDay;
     }

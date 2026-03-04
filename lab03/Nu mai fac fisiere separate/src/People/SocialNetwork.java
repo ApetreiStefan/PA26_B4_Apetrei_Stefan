@@ -1,6 +1,5 @@
-import People.*;
+package People;
 
-import java.security.KeyPair;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,6 +11,7 @@ public class SocialNetwork {
 //-------------------------------------------
     public SocialNetwork(){
         this.profiles = new TreeMap<>();
+        GlobalID.maxID = 0;
     }
 //-------------------------------------------
     public int getImportance(Profile p){
@@ -52,6 +52,7 @@ public class SocialNetwork {
      * Folosim un TreeMap setat la reverse order pentru a obtine sortarea dupa importanta
      * Importanta este reprezentata in fiecare clasa de marimea listei de relatii + 1
      */
+    //Acum observ ca am scris unele comentarii in romana si unele in engleza :c
     public void print(){
         sortedProfiles = new TreeMap<>(Collections.reverseOrder());
         for(Map.Entry<Integer, Profile> it : profiles.entrySet()){
@@ -62,7 +63,13 @@ public class SocialNetwork {
         }
     }
 
+    public TreeMap<Integer, Profile> getProfiles(){return profiles;}
+
     public void addProfile(Profile p){
         profiles.put(p.getID(), p);
+    }
+
+    private void dfs(Profile current, Profile parent){
+
     }
 }

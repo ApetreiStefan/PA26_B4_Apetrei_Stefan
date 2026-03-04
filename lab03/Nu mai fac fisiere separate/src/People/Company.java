@@ -41,6 +41,8 @@ public class Company implements Comparable<Company>, Profile{
         this.ID = ID;
     }
 
+    public TreeMap<Integer, Profile> getConnections(){return connections;}
+
     @Override
     public int compareTo(Company o) {
         return name.compareTo(o.getName());
@@ -62,10 +64,10 @@ public class Company implements Comparable<Company>, Profile{
         return connections.size() + 1;
     }
 
-
-
     @Override
     public String toString() {
         return "Profilul (ID:" + ID + " Nume:" + name + ")";
     }
+
+
 }
