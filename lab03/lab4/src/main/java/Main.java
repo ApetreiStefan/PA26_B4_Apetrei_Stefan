@@ -1,7 +1,4 @@
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.random.*;
 
@@ -17,7 +14,7 @@ public class Main {
                 })
                 .toList());
 
-        streets.sort( (s1,s2) -> Integer.compare(s1.getLength(), s2.getLength()));
+        streets.sort(Comparator.comparingInt(Street::getLength));
 
         Set<Intersection> setOfIntersections = new HashSet<>(intersections); // verificam daca elementele din set sunt unice cu metoda equals, care este overriten in clasa Intersection
 

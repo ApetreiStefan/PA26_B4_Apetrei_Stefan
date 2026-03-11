@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Intersection {
     private String name;
 
@@ -7,12 +9,10 @@ public class Intersection {
 
     @Override
     public boolean equals(Object other){
-       switch (other){
-           case null:
-               return false;
-           case Intersection intersection:
-               return this.name == intersection.name;
-           default: return false;
-       }
+        return switch (other) {
+            case null -> false;
+            case Intersection intersection -> Objects.equals(this.name, intersection.name);
+            default -> false;
+        };
     }
 }
