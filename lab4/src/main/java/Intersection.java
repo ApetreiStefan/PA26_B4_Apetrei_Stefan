@@ -1,4 +1,10 @@
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
+
+@Getter
+@Setter
 
 public class Intersection {
     private String name;
@@ -14,5 +20,10 @@ public class Intersection {
             case Intersection intersection -> Objects.equals(this.name, intersection.name);
             default -> false;
         };
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

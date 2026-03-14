@@ -17,6 +17,19 @@
             <version>1.18.42</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Source: https://github.com/DiUS/java-faker -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
