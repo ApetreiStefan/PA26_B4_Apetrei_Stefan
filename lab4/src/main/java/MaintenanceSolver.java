@@ -9,7 +9,6 @@ public class MaintenanceSolver {
 
     /**
      * Finds a maintenance route that visits all intersections.
-     * Guaranteed to be no worse than 2x the optimal cost.
      * Runs in O(E log V) time.
      */
     public List<Street> getMaintenanceRoute(City city) {
