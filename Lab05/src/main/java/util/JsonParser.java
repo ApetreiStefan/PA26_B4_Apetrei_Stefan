@@ -1,40 +1,79 @@
 package util;
 
 import repo.Resource;
-
 import java.io.*;
 
-public class JsonParser {
-    private BufferedReader reader;
-    private String path;
+public class JsonParser implements AutoCloseable {
+    private final BufferedReader reader;
 
-    public JsonParser(String path){
+    public JsonParser(String path) {
         try {
-            this.path = path;
             this.reader = new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("File not found: " + path, e);
         }
     }
 
-    public Resource readResource(){
-
+    /**
+     * Reads a single JSON object from the current line.
+     */
+    public Resource readResource() {
+        StringBuilder jsonObjectBuilder = new StringBuilder();
         String line;
-        try{
-            line = reader.readLine();
+        boolean insideObject = false;
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+                if (line.contains("{")) insideObject = true;
+                if (insideObject) {
+                    jsonObjectBuilder.append(line);
+                }
+
+                if (line.contains("}")) {
+                    String fullJson = jsonObjectBuilder.toString();
+                    return new Resource(
+                            getField(fullJson, "id"),
+                            getField(fullJson, "title"),
+                            getField(fullJson, "location"),
+                            getField(fullJson, "year"),
+                            getField(fullJson, "author")
+                    );
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading JSON", e);
         }
-        catch (IOException e){
-            throw new RuntimeException(e);
-        }
-        if(line == null) return null;
-        return new Resource(getField(line,"id"), getField(line,"title"), getField(line,"location"), getField(line, "year"), getField(line,"author"));
+        return null;
     }
 
-    private String getField(String line, String key){
-        String search = "\"" + key + "\":\"";
-        int start = line.indexOf(search) + search.length();
-        int end = line.indexOf("\"", start);
-        return line.substring(start, end);
+    /**
+     * Extracts value for a given key.
+     * Handles "key":"value"
+     */
+    private String getField(String line, String key) {
+        try {
+            String search = "\"" + key + "\"";
+            int keyIndex = line.indexOf(search);
+            if (keyIndex == -1) return null;
+
+            int colonIndex = line.indexOf(":", keyIndex + search.length());
+            int startQuote = line.indexOf("\"", colonIndex) + 1;
+            int endQuote = line.indexOf("\"", startQuote);
+
+            return line.substring(startQuote, endQuote);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
+    @Override
+    public void close() {
+        try {
+            if (reader != null) reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -14,9 +14,9 @@ public class MaintenanceSolver {
     public List<Street> getMaintenanceRoute(City city) {
         Graph<Intersection, Street> graph = new SimpleWeightedGraph<>(Street.class);
         city.getIntersections().forEach(graph::addVertex);
-        city.getStreets().forEach(s -> {
-            graph.addEdge(s.getFirst(), s.getSecond(), s);
-            graph.setEdgeWeight(s, s.getLength());
+        city.getStreets().forEach(street -> {
+            graph.addEdge(street.getFirst(), street.getSecond(), street);
+            graph.setEdgeWeight(street, street.getLength());
         });
         TwoApproxMetricTSP<Intersection, Street> tsp = new TwoApproxMetricTSP<>();
         GraphPath<Intersection, Street> tour = tsp.getTour(graph);

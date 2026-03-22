@@ -1,3 +1,0 @@
-{"id":"knuth67", "title":"The Art of Computer Programming", "location":"d:/books/programming/tacp.ps", "year":"1967", "author":"Donald E. Knuth"};
-{"id":"jvm25", "title":"The Java Virtual Machine Specification", "location":"C:\Users\stefa\Downloads\Taboos and Issues.pdf", "year":"2025", "author":"Tim Lindholm & others"};
-{"id":"java25", "title":"The Java Language Specification", "location":"https://docs.oracle.com/javase/specs/jls/se25/jls25.pdf", "year":"2025", "author":"James Gosling & others"};
