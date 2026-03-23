@@ -4,18 +4,18 @@ import java.util.UUID;
 public class GenreDAO {
 
     private final Connection connection;
-
+    public static Integer maxID = 1;
     public GenreDAO(Connection connection) {
         this.connection = connection;
     }
 
     public int create(String name) throws SQLException {
-        String sql = "INSERT OR IGNORE INTO genres (name) VALUES (?) RETURNING id";
+        String sql = "INSERT INTO genres VALUES (?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, name);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getInt("id");
+            ps.setString(1, maxID.toString());
+            ps.setString(2, name);
+            maxID++;
+            return 0;
         }
     }
 
