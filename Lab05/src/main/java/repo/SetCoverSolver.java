@@ -14,8 +14,7 @@ import java.util.*;
  */
 public class SetCoverSolver {
 
-    public static List<Resource> greedyCover(
-            Repository repository, Set<Concept> universe) {
+    public static List<Resource> greedyCover(Repository repository, Set<Concept> universe) {
 
         Set<Concept> remaining = EnumSet.copyOf(universe);
         List<Resource> chosen = new ArrayList<>();
@@ -25,12 +24,12 @@ public class SetCoverSolver {
             Resource best = null;
             int bestCovered = -1;
 
-            for (Resource r : pool) {
-                if (chosen.contains(r)) continue;
-                int covered = countIntersection(r.getConcepts(), remaining);
+            for (Resource resource : pool) {
+                if (chosen.contains(resource)) continue;
+                int covered = countIntersection(resource.getConcepts(), remaining);
                 if (covered > bestCovered) {
                     bestCovered = covered;
-                    best = r;
+                    best = resource;
                 }
             }
 
@@ -48,18 +47,19 @@ public class SetCoverSolver {
         List<Resource> resources = new ArrayList<>(repository.getResources());
         int n = resources.size();
 
-        // Upper bound: start with greedy solution
         List<Resource> greedySolution = greedyCover(repository, universe);
         int[] bestSize = { greedySolution != null ? greedySolution.size() : n + 1 };
         List<Resource>[] best = new List[]{ greedySolution };
 
-        // Branch-and-bound: iterate subsets in order of increasing size
-        branchAndBound(resources, universe, new ArrayList<>(),
-                EnumSet.noneOf(Concept.class), 0, best, bestSize);
+        branchAndBound(resources, universe, new ArrayList<>(), EnumSet.noneOf(Concept.class), 0, best, bestSize);
 
         return best[0];
     }
 
+    /**
+     * The recursive core of the problem
+     * It takes a resource or it does not
+     */
     private static void branchAndBound(
             List<Resource> resources,
             Set<Concept> universe,
@@ -77,9 +77,8 @@ public class SetCoverSolver {
             return;
         }
         if (idx >= resources.size()) return;
-        if (current.size() >= bestSize[0] - 1) return; // prune
+        if (current.size() >= bestSize[0] - 1) return;
 
-        // Lower-bound pruning: remaining resources can't cover uncovered concepts
         Set<Concept> remaining = EnumSet.copyOf(universe);
         remaining.removeAll(covered);
         Set<Concept> reachable = EnumSet.noneOf(Concept.class);
@@ -90,14 +89,12 @@ public class SetCoverSolver {
 
         Resource r = resources.get(idx);
 
-        // Branch 1: include r
         Set<Concept> newCovered = EnumSet.copyOf(covered);
         newCovered.addAll(r.getConcepts());
         current.add(r);
         branchAndBound(resources, universe, current, newCovered, idx + 1, best, bestSize);
         current.remove(current.size() - 1);
 
-        // Branch 2: exclude r
         branchAndBound(resources, universe, current, covered, idx + 1, best, bestSize);
     }
 
@@ -144,7 +141,6 @@ public class SetCoverSolver {
             double density = densities[cfg[2]];
             Repository repo = generateRandomInstance(numRes, numCon, density, rng);
 
-            // Restrict universe to concepts actually used
             Set<Concept> usedConcepts = EnumSet.noneOf(Concept.class);
             repo.getResources().forEach(r -> usedConcepts.addAll(r.getConcepts()));
             if (usedConcepts.isEmpty()) continue;
@@ -154,7 +150,7 @@ public class SetCoverSolver {
             int greedySize = greedy != null ? greedy.size() : -1;
 
             List<Resource> exact = null;
-            if (numRes <= 30) { // exact only for small instances
+            if (numRes <= 30) {
                 exact = exactMinimumCover(repo, usedConcepts);
             }
             long elapsed = System.currentTimeMillis() - start;

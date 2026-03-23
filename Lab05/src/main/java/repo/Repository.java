@@ -1,12 +1,6 @@
 package repo;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
-
-@Setter
-@Getter
 
 public class Repository {
     List<Resource> resources;
@@ -24,5 +18,13 @@ public class Repository {
             }
         }
         return null;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
     }
 }
