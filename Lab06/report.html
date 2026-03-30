@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Movies Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0d0d0d;
+            color: #e8e0d0;
+            min-height: 100vh;
+            padding: 60px 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            letter-spacing: -1px;
+            color: #f5e6c8;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #777;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .table-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888;
+            padding: 12px 20px;
+            border-bottom: 1px solid #2a2a2a;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #1a1a1a;
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover { background: #161616; }
+
+        tbody td {
+            padding: 18px 20px;
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+
+        .title-cell {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: #f5e6c8;
+        }
+
+        .score {
+            display: inline-block;
+            background: #1e1e1e;
+            border: 1px solid #2e2e2e;
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #c8a96e;
+        }
+
+        .genre-tag {
+            display: inline-block;
+            background: #1a1a2e;
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            color: #8888cc;
+        }
+
+        .actors-cell {
+            color: #999;
+            font-size: 0.88rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.8rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Movies Report</h1>
+    <p>Generated on 30 Mar 2026, 13:24</p>
+</header>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Release Date</th>
+                <th>Duration</th>
+                <th>Score</th>
+                <th>Actors</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="title-cell">A Walk in the Clouds</td>
+                <td><span class="genre-tag">Romance</span></td>
+                <td>1995-08-11</td>
+                <td>102 min</td>
+                <td><span class="score">★ 6.6</span></td>
+                <td class="actors-cell">Anthony Quinn, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">A Walk in the Clouds</td>
+                <td><span class="genre-tag">Romance</span></td>
+                <td>1995-08-11</td>
+                <td>102 min</td>
+                <td><span class="score">★ 6.6</span></td>
+                <td class="actors-cell">Anthony Quinn, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Cast Away</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>2000-12-22</td>
+                <td>143 min</td>
+                <td><span class="score">★ 7.8</span></td>
+                <td class="actors-cell">Tom Hanks</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Cast Away</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>2000-12-22</td>
+                <td>143 min</td>
+                <td><span class="score">★ 7.8</span></td>
+                <td class="actors-cell">Tom Hanks</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Cast Away</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>2000-12-22</td>
+                <td>143 min</td>
+                <td><span class="score">★ 7.8</span></td>
+                <td class="actors-cell">Tom Hanks</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Cast Away</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>2000-12-22</td>
+                <td>143 min</td>
+                <td><span class="score">★ 7.8</span></td>
+                <td class="actors-cell">Tom Hanks</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Cast Away</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>2000-12-22</td>
+                <td>143 min</td>
+                <td><span class="score">★ 7.8</span></td>
+                <td class="actors-cell">Tom Hanks</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Cast Away</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>2000-12-22</td>
+                <td>143 min</td>
+                <td><span class="score">★ 7.8</span></td>
+                <td class="actors-cell">Tom Hanks</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Forrest Gump</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>1994-07-06</td>
+                <td>142 min</td>
+                <td><span class="score">★ 8.8</span></td>
+                <td class="actors-cell">Tom Hanks, Robin Wright</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Forrest Gump</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>1994-07-06</td>
+                <td>142 min</td>
+                <td><span class="score">★ 8.8</span></td>
+                <td class="actors-cell">Tom Hanks, Robin Wright</td>
+            </tr>
+            <tr>
+                <td class="title-cell">John Wick</td>
+                <td><span class="genre-tag">Action</span></td>
+                <td>2014-10-24</td>
+                <td>101 min</td>
+                <td><span class="score">★ 7.4</span></td>
+                <td class="actors-cell">Ian McShane, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">John Wick</td>
+                <td><span class="genre-tag">Action</span></td>
+                <td>2014-10-24</td>
+                <td>101 min</td>
+                <td><span class="score">★ 7.4</span></td>
+                <td class="actors-cell">Ian McShane, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Knock Knock</td>
+                <td><span class="genre-tag">Thriller</span></td>
+                <td>2015-10-09</td>
+                <td>99 min</td>
+                <td><span class="score">★ 5.1</span></td>
+                <td class="actors-cell">Ana de Armas, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Knock Knock</td>
+                <td><span class="genre-tag">Thriller</span></td>
+                <td>2015-10-09</td>
+                <td>99 min</td>
+                <td><span class="score">★ 5.1</span></td>
+                <td class="actors-cell">Ana de Armas, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Mamma Mia</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2008-07-10</td>
+                <td>108 min</td>
+                <td><span class="score">★ 6.4</span></td>
+                <td class="actors-cell">Amanda Seyfried, Meryl Streep</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Mamma Mia</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2008-07-10</td>
+                <td>108 min</td>
+                <td><span class="score">★ 6.4</span></td>
+                <td class="actors-cell">Amanda Seyfried, Meryl Streep</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Much Ado About Nothing</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>1993-05-07</td>
+                <td>111 min</td>
+                <td><span class="score">★ 7.3</span></td>
+                <td class="actors-cell">Kenneth Branagh, Emma Thompson</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Much Ado About Nothing</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>1993-05-07</td>
+                <td>111 min</td>
+                <td><span class="score">★ 7.3</span></td>
+                <td class="actors-cell">Kenneth Branagh, Emma Thompson</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Speed</td>
+                <td><span class="genre-tag">Action</span></td>
+                <td>1994-06-10</td>
+                <td>116 min</td>
+                <td><span class="score">★ 7.2</span></td>
+                <td class="actors-cell">Sandra Bullock, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Speed</td>
+                <td><span class="genre-tag">Action</span></td>
+                <td>1994-06-10</td>
+                <td>116 min</td>
+                <td><span class="score">★ 7.2</span></td>
+                <td class="actors-cell">Sandra Bullock, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Speed 2 Cruise Control</td>
+                <td><span class="genre-tag">Action</span></td>
+                <td>1997-06-13</td>
+                <td>125 min</td>
+                <td><span class="score">★ 3.6</span></td>
+                <td class="actors-cell">Sandra Bullock, Jason Patric</td>
+            </tr>
+            <tr>
+                <td class="title-cell">Speed 2 Cruise Control</td>
+                <td><span class="genre-tag">Action</span></td>
+                <td>1997-06-13</td>
+                <td>125 min</td>
+                <td><span class="score">★ 3.6</span></td>
+                <td class="actors-cell">Sandra Bullock, Jason Patric</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Devil and Daniel Webster</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>1941-10-16</td>
+                <td>107 min</td>
+                <td><span class="score">★ 7.5</span></td>
+                <td class="actors-cell">Anne Hathaway, Anthony Quinn</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Devil and Daniel Webster</td>
+                <td><span class="genre-tag">Drama</span></td>
+                <td>1941-10-16</td>
+                <td>107 min</td>
+                <td><span class="score">★ 7.5</span></td>
+                <td class="actors-cell">Anne Hathaway, Anthony Quinn</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Devil Wears Prada</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2006-06-30</td>
+                <td>109 min</td>
+                <td><span class="score">★ 6.9</span></td>
+                <td class="actors-cell">Anne Hathaway, Meryl Streep</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Devil Wears Prada</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2006-06-30</td>
+                <td>109 min</td>
+                <td><span class="score">★ 6.9</span></td>
+                <td class="actors-cell">Meryl Streep</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Devil Wears Prada</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2006-06-30</td>
+                <td>109 min</td>
+                <td><span class="score">★ 6.9</span></td>
+                <td class="actors-cell">Anne Hathaway, Meryl Streep</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Lake House</td>
+                <td><span class="genre-tag">Romance</span></td>
+                <td>2006-06-16</td>
+                <td>99 min</td>
+                <td><span class="score">★ 6.8</span></td>
+                <td class="actors-cell">Sandra Bullock, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Lake House</td>
+                <td><span class="genre-tag">Romance</span></td>
+                <td>2006-06-16</td>
+                <td>99 min</td>
+                <td><span class="score">★ 6.8</span></td>
+                <td class="actors-cell">Sandra Bullock, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Matrix</td>
+                <td><span class="genre-tag">Sci-Fi</span></td>
+                <td>1999-03-31</td>
+                <td>136 min</td>
+                <td><span class="score">★ 8.7</span></td>
+                <td class="actors-cell">Carrie-Anne Moss, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Matrix</td>
+                <td><span class="genre-tag">Sci-Fi</span></td>
+                <td>1999-03-31</td>
+                <td>136 min</td>
+                <td><span class="score">★ 8.7</span></td>
+                <td class="actors-cell">Laurence Fishburne, Carrie-Anne Moss, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Matrix</td>
+                <td><span class="genre-tag">Sci-Fi</span></td>
+                <td>1999-03-31</td>
+                <td>136 min</td>
+                <td><span class="score">★ 8.7</span></td>
+                <td class="actors-cell">Carrie-Anne Moss, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Matrix</td>
+                <td><span class="genre-tag">Sci-Fi</span></td>
+                <td>1999-03-31</td>
+                <td>136 min</td>
+                <td><span class="score">★ 8.7</span></td>
+                <td class="actors-cell">Carrie-Anne Moss, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Matrix</td>
+                <td><span class="genre-tag">Sci-Fi</span></td>
+                <td>1999-03-31</td>
+                <td>136 min</td>
+                <td><span class="score">★ 8.7</span></td>
+                <td class="actors-cell">Carrie-Anne Moss, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Matrix</td>
+                <td><span class="genre-tag">Sci-Fi</span></td>
+                <td>1999-03-31</td>
+                <td>136 min</td>
+                <td><span class="score">★ 8.7</span></td>
+                <td class="actors-cell">Laurence Fishburne, Carrie-Anne Moss, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Proposal</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2009-06-19</td>
+                <td>108 min</td>
+                <td><span class="score">★ 6.7</span></td>
+                <td class="actors-cell">Sandra Bullock, Ryan Reynolds</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Proposal</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2009-06-19</td>
+                <td>108 min</td>
+                <td><span class="score">★ 6.7</span></td>
+                <td class="actors-cell">Sandra Bullock, Ryan Reynolds</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Replacements</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2000-08-18</td>
+                <td>118 min</td>
+                <td><span class="score">★ 6.4</span></td>
+                <td class="actors-cell">Gene Hackman, Keanu Reeves</td>
+            </tr>
+            <tr>
+                <td class="title-cell">The Replacements</td>
+                <td><span class="genre-tag">Comedy</span></td>
+                <td>2000-08-18</td>
+                <td>118 min</td>
+                <td><span class="score">★ 6.4</span></td>
+                <td class="actors-cell">Gene Hackman, Keanu Reeves</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>39 movies total</p>
+</footer>
+
+</body>
+</html>
