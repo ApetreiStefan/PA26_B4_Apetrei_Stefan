@@ -1,4 +1,4 @@
-package model;
+package com.model;
 
 public class Actor {
     private int id;
@@ -20,6 +20,6 @@ public class Actor {
 
     @Override
     public String toString() {
-        return "model.Actor{id=" + id + ", name='" + getFullName() + "'}";
+        return "com.model.Actor{id=" + id + ", name='" + getFullName() + "'}";
     }
 }

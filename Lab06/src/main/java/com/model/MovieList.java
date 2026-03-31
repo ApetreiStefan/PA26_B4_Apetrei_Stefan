@@ -1,4 +1,4 @@
-package model;
+package com.model;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

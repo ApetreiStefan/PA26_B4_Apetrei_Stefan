@@ -1,4 +1,4 @@
-package db;
+package com.db;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.flywaydb.core.Flyway;
@@ -24,7 +24,7 @@ public class DatabaseConnection {
         // 1. Run Flyway migrations before opening the pool
         Flyway.configure()
                 .dataSource(URL, USERNAME, PASSWORD)
-                .locations("classpath:db/migration")
+                .locations("classpath:com.db/migration")
                 .baselineOnMigrate(true)   // safe to run even if DB already has tables
                 .load()
                 .migrate();

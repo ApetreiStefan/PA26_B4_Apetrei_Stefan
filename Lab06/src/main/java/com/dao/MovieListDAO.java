@@ -1,7 +1,7 @@
-package dao;
+package com.dao;
 
-import db.DatabaseConnection;
-import model.MovieList;
+import com.db.DatabaseConnection;
+import com.model.MovieList;
 
 import java.sql.*;
 import java.util.ArrayList;

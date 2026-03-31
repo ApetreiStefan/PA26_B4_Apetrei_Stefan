@@ -1,11 +1,11 @@
-package importer;
+package com.importer;
 
-import dao.ActorDAO;
-import dao.GenreDAO;
-import dao.MovieDAO;
-import model.Actor;
-import model.Genre;
-import model.Movie;
+import com.dao.ActorDAO;
+import com.dao.GenreDAO;
+import com.dao.MovieDAO;
+import com.model.Actor;
+import com.model.Genre;
+import com.model.Movie;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 

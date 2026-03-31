@@ -1,7 +1,7 @@
-package dao;
+package com.dao;
 
-import db.DatabaseConnection;
-import model.Actor;
+import com.db.DatabaseConnection;
+import com.model.Actor;
 
 import java.sql.*;
 import java.util.ArrayList;

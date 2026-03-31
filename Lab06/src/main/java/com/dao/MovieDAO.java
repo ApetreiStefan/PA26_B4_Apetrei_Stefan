@@ -1,10 +1,10 @@
-package dao;
+package com.dao;
 
-import db.DatabaseConnection;
-import model.Actor;
-import model.Genre;
-import model.Movie;
-import model.MovieReportEntry;
+import com.db.DatabaseConnection;
+import com.model.Actor;
+import com.model.Genre;
+import com.model.Movie;
+import com.model.MovieReportEntry;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -36,6 +36,7 @@ public class MovieDAO {
             int id = rs.getInt("id");
             // Fetch the genre to build a complete Movie object
             Genre genre = new Genre(genreId, null);
+            System.out.println("Adaugat-am un film (daca nu era deja in tabel)");
             return new Movie(id, title, releaseDate, duration, score, genre);
         }
     }
@@ -91,7 +92,7 @@ public class MovieDAO {
         return list;
     }
 
-    // Reads from the movies_report view — used by the HTML report generator
+    // Reads from the movies_report view — used by the HTML com.report generator
     public List<MovieReportEntry> findAllForReport() throws SQLException {
         String sql = "SELECT title, release_date, duration, score, genre, actors FROM movies_report";
         List<MovieReportEntry> list = new ArrayList<>();

@@ -1,15 +1,16 @@
-import dao.ActorDAO;
-import dao.GenreDAO;
-import dao.MovieDAO;
-import db.DatabaseConnection;
-import model.*;
-import report.ReportGenerator;
+package com;
+
+import com.dao.ActorDAO;
+import com.dao.GenreDAO;
+import com.dao.MovieDAO;
+import com.db.DatabaseConnection;
+import com.report.ReportGenerator;
 
 //import java.time.LocalDate;
 //import java.util.List;
 //import java.util.Optional;
 //
-//public class Main {
+//public class com.Main {
 //
 //    public static void main(String[] args) throws Exception {
 //
@@ -65,25 +66,20 @@ import report.ReportGenerator;
 //        });
 //
 //        // -- HTML Report --
-//        System.out.println("\n=== Generating HTML report ===");
+//        System.out.println("\n=== Generating HTML com.report ===");
 //        List<MovieReportEntry> reportData = movieDAO.findAllForReport();
-//        new ReportGenerator().generate(reportData, "report.html");
+//        new ReportGenerator().generate(reportData, "com.report.html");
 //
 //        DatabaseConnection.getInstance().shutdown();
 //    }
 //}
 
-import dao.ActorDAO;
-import dao.GenreDAO;
-import dao.MovieDAO;
-import dao.MovieListDAO;
-import db.DatabaseConnection;
-import importer.MovieLensImporter;
-import model.Movie;
-import model.MovieList;
-import model.MovieReportEntry;
-import partition.MoviePartitioner;
-import report.ReportGenerator;
+import com.dao.MovieListDAO;
+import com.importer.MovieLensImporter;
+import com.model.Movie;
+import com.model.MovieList;
+import com.model.MovieReportEntry;
+import com.partition.MoviePartitioner;
 
 import java.util.List;
 
@@ -125,9 +121,9 @@ public class Main {
             System.out.println("Saved: " + list);
         }
 
-        System.out.println("\n=== Generating HTML report ===");
+        System.out.println("\n=== Generating HTML com.report ===");
         List<MovieReportEntry> reportData = movieDAO.findAllForReport();
-        new ReportGenerator().generate(reportData, "report.html");
+        new ReportGenerator().generate(reportData, "com.report.html");
 
         DatabaseConnection.getInstance().shutdown();
     }

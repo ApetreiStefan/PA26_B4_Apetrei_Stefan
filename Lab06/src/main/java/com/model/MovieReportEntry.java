@@ -1,7 +1,7 @@
-package model;
+package com.model;
 
-// Flat model that maps directly to one row of the movies_report database view.
-// Used only for generating the HTML report — avoids joining objects manually.
+// Flat com.model that maps directly to one row of the movies_report database view.
+// Used only for generating the HTML com.report — avoids joining objects manually.
 public class MovieReportEntry {
     private final String title;
     private final String releaseDate;

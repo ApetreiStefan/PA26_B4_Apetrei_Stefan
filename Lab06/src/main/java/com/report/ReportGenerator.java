@@ -1,6 +1,6 @@
-package report;
+package com.report;
 
-import model.MovieReportEntry;
+import com.model.MovieReportEntry;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -26,13 +26,13 @@ public class ReportGenerator {
     }
 
     /**
-     * Renders report.ftl with the given movie data and writes the result
-     * to the specified output file path (e.g. "report.html").
+     * Renders com.report.ftl with the given movie data and writes the result
+     * to the specified output file path (e.g. "com.report.html").
      */
     public void generate(List<MovieReportEntry> movies, String outputPath) throws Exception {
         Template template = freemarker.getTemplate("report.ftl");
 
-        // The data model is a plain Map — FreeMarker reads it from the template
+        // The data com.model is a plain Map — FreeMarker reads it from the template
         Map<String, Object> model = new HashMap<>();
         model.put("movies", movies);
         model.put("generatedAt", LocalDateTime.now()

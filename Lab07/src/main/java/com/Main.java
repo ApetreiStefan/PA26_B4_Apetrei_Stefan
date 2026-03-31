@@ -12,3 +12,10 @@ public class Main {
 // Am scris https//localhost:8081/movies si am gasit o pagina goala cu un json in ea
 // deci am sa banuiesc ca merge
 // port 8081 am ales pentru ca am ceva proces de la oracle care imi mananca portul 8080
+
+//README
+
+//dupa o discutie cu colegii mei, am ajuns la concluzia ca nu am citit enuntul.
+//trebuia sa continuam proiectul de la lab 06.
+
+//asadar Lab07 se va afla tot in folderul lab06

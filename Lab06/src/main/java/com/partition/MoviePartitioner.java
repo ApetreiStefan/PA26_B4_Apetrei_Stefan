@@ -1,6 +1,6 @@
-package partition;
+package com.partition;
 
-import model.Movie;
+import com.model.Movie;
 
 import java.util.*;
 
