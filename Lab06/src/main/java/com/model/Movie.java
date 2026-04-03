@@ -1,8 +1,15 @@
 package com.model;
 
+import com.dao.GenreDAO;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+@Getter
+@Setter
 
 public class Movie {
     private int id;
@@ -21,6 +28,27 @@ public class Movie {
         this.score = score;
         this.genre = genre;
         this.actors = new ArrayList<>();
+    }
+
+    public Movie(int id, String title, LocalDate releaseDate, int duration, double score, int genreID) {
+        this.id = id;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.score = score;
+        GenreDAO genreDAO = new GenreDAO();
+        try{
+            this.genre = genreDAO.findById(genreID).orElse(null);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        this.actors = new ArrayList<>();
+    }
+
+    public Movie(){
+        actors = new ArrayList<>();
     }
 
     public int getId()                { return id; }

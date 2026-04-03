@@ -52,6 +52,49 @@ public class MovieDAO {
         }
     }
 
+    public void remove(Movie movie) throws SQLException {
+        String sql = "DELETE FROM movies WHERE id = ?";
+        try (Connection conn = getConn();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, movie.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update(Movie movie) throws SQLException {
+
+        String sql = """
+            UPDATE movies 
+            SET title = ?, 
+                release_date = ?, 
+                duration = ?, 
+                score = ?, 
+                genre_id = ? 
+            WHERE id = ?
+            """;
+
+        try (Connection conn = getConn();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, movie.getTitle());
+            ps.setDate(2, Date.valueOf(movie.getReleaseDate()));
+            ps.setInt(3, movie.getDuration());
+            ps.setDouble(4, movie.getScore());
+            ps.setInt(5, movie.getGenre().getId());
+            ps.setInt(6, movie.getId());
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Filmul cu ID " + movie.getId() + " a fost actualizat.");
+            } else {
+                System.out.println("Nu s-a gasit niciun film cu ID-ul specificat.");
+            }
+        }
+    }
+
     public Optional<Movie> findById(int id) throws SQLException {
         String sql = """
                 SELECT m.id, m.title, m.release_date, m.duration, m.score,
