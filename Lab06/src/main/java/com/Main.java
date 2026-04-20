@@ -3,83 +3,14 @@ package com;
 import com.dao.ActorDAO;
 import com.dao.GenreDAO;
 import com.dao.MovieDAO;
-import com.db.DatabaseConnection;
-import com.report.ReportGenerator;
-
-//import java.time.LocalDate;
-//import java.util.List;
-//import java.util.Optional;
-//
-//public class com.Main {
-//
-//    public static void main(String[] args) throws Exception {
-//
-//        GenreDAO genreDAO = new GenreDAO();
-//        ActorDAO actorDAO = new ActorDAO();
-//        MovieDAO movieDAO = new MovieDAO();
-//
-//        // -- Genres --
-//        System.out.println("=== Genres ===");
-//        Genre scifi  = genreDAO.create("Sci-Fi");
-//        Genre drama  = genreDAO.create("Drama");
-//        Genre comedy = genreDAO.create("Comedy");
-//        System.out.println("Created: " + scifi);
-//        System.out.println("Created: " + drama);
-//
-//        Optional<Genre> found = genreDAO.findById(scifi.getId());
-//        System.out.println("findById -> " + found);
-//
-//        Optional<Genre> foundByName = genreDAO.findByName("Drama");
-//        System.out.println("findByName -> " + foundByName);
-//
-//        System.out.println("All genres: " + genreDAO.findAll());
-//
-//        // -- Actors --
-//        System.out.println("\n=== Actors ===");
-//        Actor keanu = actorDAO.create("Keanu", "Reeves");
-//        Actor carrie = actorDAO.create("Carrie-Anne", "Moss");
-//        Actor tom = actorDAO.create("Tom", "Hanks");
-//        System.out.println("Created: " + keanu);
-//        System.out.println("Created: " + carrie);
-//        System.out.println("All actors: " + actorDAO.findAll());
-//
-//        // -- Movies --
-//        System.out.println("\n=== Movies ===");
-//        Movie matrix = movieDAO.create("The Matrix", LocalDate.of(1999, 3, 31), 136, 8.7, scifi.getId());
-//        Movie castAway = movieDAO.create("Cast Away", LocalDate.of(2000, 12, 22), 143, 7.8, drama.getId());
-//        System.out.println("Created: " + matrix);
-//        System.out.println("Created: " + castAway);
-//
-//        // -- Link actors to movies --
-//        movieDAO.addActorToMovie(matrix.getId(),  keanu.getId());
-//        movieDAO.addActorToMovie(matrix.getId(),  carrie.getId());
-//        movieDAO.addActorToMovie(castAway.getId(), tom.getId());
-//
-//        // -- Fetch full movie with actors --
-//        System.out.println("\n=== Full movie details ===");
-//        Optional<Movie> fullMovie = movieDAO.findById(matrix.getId());
-//        fullMovie.ifPresent(m -> {
-//            System.out.println(m);
-//            System.out.println("  Genre:  " + m.getGenre().getName());
-//            System.out.println("  Actors: " + m.getActors().stream()
-//                    .map(Actor::getFullName).toList());
-//        });
-//
-//        // -- HTML Report --
-//        System.out.println("\n=== Generating HTML com.report ===");
-//        List<MovieReportEntry> reportData = movieDAO.findAllForReport();
-//        new ReportGenerator().generate(reportData, "com.report.html");
-//
-//        DatabaseConnection.getInstance().shutdown();
-//    }
-//}
-
 import com.dao.MovieListDAO;
+import com.db.DatabaseConnection;
 import com.importer.MovieLensImporter;
 import com.model.Movie;
 import com.model.MovieList;
 import com.model.MovieReportEntry;
 import com.partition.MoviePartitioner;
+import com.report.ReportGenerator;
 
 import java.util.List;
 
@@ -87,10 +18,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        GenreDAO     genreDAO = new GenreDAO();
-        ActorDAO     actorDAO = new ActorDAO();
-        MovieDAO     movieDAO = new MovieDAO();
-        MovieListDAO listDAO  = new MovieListDAO();
+        GenreDAO genreDAO = new GenreDAO();
+        ActorDAO actorDAO = new ActorDAO();
+        MovieDAO movieDAO = new MovieDAO();
+        MovieListDAO listDAO = new MovieListDAO();
 
         System.out.println("=== Importing dataset ===");
         MovieLensImporter importer = new MovieLensImporter(genreDAO, actorDAO, movieDAO);

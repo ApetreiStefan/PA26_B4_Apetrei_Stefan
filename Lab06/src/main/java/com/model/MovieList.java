@@ -17,14 +17,33 @@ public class MovieList {
         this.movies = new ArrayList<>();
     }
 
-    public int getId()                   { return id; }
-    public String getName()              { return name; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
-    public List<Movie> getMovies()       { return movies; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id)            { this.id = id; }
-    public void addMovie(Movie m)        { movies.add(m); }
-    public int size()                    { return movies.size(); }
+    public String getName() {
+        return name;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void addMovie(Movie m) {
+        movies.add(m);
+    }
+
+    public int size() {
+        return movies.size();
+    }
 
     @Override
     public String toString() {

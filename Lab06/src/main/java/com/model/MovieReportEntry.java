@@ -20,10 +20,27 @@ public class MovieReportEntry {
         this.actors = actors != null ? actors : "—";
     }
 
-    public String getTitle()       { return title; }
-    public String getReleaseDate() { return releaseDate; }
-    public int getDuration()       { return duration; }
-    public double getScore()       { return score; }
-    public String getGenre()       { return genre != null ? genre : "—"; }
-    public String getActors()      { return actors; }
+    public String getTitle() {
+        return title;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public String getGenre() {
+        return genre != null ? genre : "—";
+    }
+
+    public String getActors() {
+        return actors;
+    }
 }

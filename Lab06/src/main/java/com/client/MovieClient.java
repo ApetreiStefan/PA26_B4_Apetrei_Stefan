@@ -1,10 +1,11 @@
 package com.client;
 
-import com.model.Movie;
 import com.model.Genre;
+import com.model.Movie;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 

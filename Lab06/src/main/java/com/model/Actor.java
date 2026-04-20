@@ -11,12 +11,25 @@ public class Actor {
         this.lastName = lastName;
     }
 
-    public int getId()           { return id; }
-    public String getFirstName() { return firstName; }
-    public String getLastName()  { return lastName; }
-    public void setId(int id)    { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getFullName()  { return firstName + " " + lastName; }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 
     @Override
     public String toString() {

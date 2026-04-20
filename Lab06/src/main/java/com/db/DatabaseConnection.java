@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class DatabaseConnection {
 
-    private static final String URL      = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "password";
 
@@ -52,12 +52,16 @@ public class DatabaseConnection {
         return instance;
     }
 
-    /** Borrows a connection from the pool. MUST be closed after use (try-with-resources). */
+    /**
+     * Borrows a connection from the pool. MUST be closed after use (try-with-resources).
+     */
     public Connection getConnection() throws SQLException {
         return pool.getConnection();
     }
 
-    /** Shuts down the pool. Call once on application exit. */
+    /**
+     * Shuts down the pool. Call once on application exit.
+     */
     public void shutdown() {
         pool.close();
     }

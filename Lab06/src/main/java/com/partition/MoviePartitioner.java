@@ -6,22 +6,22 @@ import java.util.*;
 
 /**
  * Partitions a collection of movies into lists where:
- *   1. No two movies in the same list share an actor (unrelated movies only).
- *   2. The number of lists is as small as possible.
- *   3. Any two lists differ in size by at most 1 (balanced).
- *
+ * 1. No two movies in the same list share an actor (unrelated movies only).
+ * 2. The number of lists is as small as possible.
+ * 3. Any two lists differ in size by at most 1 (balanced).
+ * <p>
  * This is equivalent to graph coloring: movies are nodes, an edge connects
  * two movies that share an actor, and each "color" is one output list.
  * The minimum number of colors needed equals the chromatic number of the graph,
  * which is at least the size of the largest clique (largest set of mutually
  * related movies).
- *
+ * <p>
  * Strategy:
- *   Phase 1 — Greedy coloring with the DSatur heuristic to get a good
- *              initial number of lists (colors).
- *   Phase 2 — Balance the lists so they differ by at most 1 in size.
- *              Movies are moved between lists only if doing so does not
- *              violate the "unrelated" constraint.
+ * Phase 1 — Greedy coloring with the DSatur heuristic to get a good
+ * initial number of lists (colors).
+ * Phase 2 — Balance the lists so they differ by at most 1 in size.
+ * Movies are moved between lists only if doing so does not
+ * violate the "unrelated" constraint.
  */
 public class MoviePartitioner {
 
@@ -106,15 +106,15 @@ public class MoviePartitioner {
     /**
      * Moves movies from oversized lists to undersized ones, provided the
      * move does not create a conflict (shared actor) in the destination list.
-     *
+     * <p>
      * Target: every list has size floor(n/k) or ceil(n/k),
      * where n = total movies, k = number of lists.
      */
     private void balance(List<List<Movie>> lists, Map<Integer, Set<Integer>> adj) {
-        int total    = lists.stream().mapToInt(List::size).sum();
-        int k        = lists.size();
-        int minSize  = total / k;
-        int maxSize  = minSize + (total % k == 0 ? 0 : 1);
+        int total = lists.stream().mapToInt(List::size).sum();
+        int k = lists.size();
+        int minSize = total / k;
+        int maxSize = minSize + (total % k == 0 ? 0 : 1);
 
         boolean changed = true;
         while (changed) {
@@ -141,7 +141,9 @@ public class MoviePartitioner {
         }
     }
 
-    /** Returns true if placing {@code movie} into {@code list} creates no conflicts. */
+    /**
+     * Returns true if placing {@code movie} into {@code list} creates no conflicts.
+     */
     private boolean canPlace(Movie movie, List<Movie> list, Map<Integer, Set<Integer>> adj) {
         Set<Integer> related = adj.get(movie.getId());
         for (Movie movieIt : list) {

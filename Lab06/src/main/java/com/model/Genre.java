@@ -9,9 +9,17 @@ public class Genre {
         this.name = name;
     }
 
-    public int getId()        { return id; }
-    public String getName()   { return name; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

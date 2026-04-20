@@ -37,30 +37,54 @@ public class Movie {
         this.duration = duration;
         this.score = score;
         GenreDAO genreDAO = new GenreDAO();
-        try{
+        try {
             this.genre = genreDAO.findById(genreID).orElse(null);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         this.actors = new ArrayList<>();
     }
 
-    public Movie(){
+    public Movie() {
         actors = new ArrayList<>();
     }
 
-    public int getId()                { return id; }
-    public String getTitle()          { return title; }
-    public LocalDate getReleaseDate() { return releaseDate; }
-    public int getDuration()          { return duration; }
-    public double getScore()          { return score; }
-    public Genre getGenre()           { return genre; }
-    public List<Actor> getActors()    { return actors; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id)         { this.id = id; }
-    public void addActor(Actor a)     { actors.add(a); }
+    public String getTitle() {
+        return title;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void addActor(Actor a) {
+        actors.add(a);
+    }
 
     // Two movies are related if they share at least one actor
     public boolean isRelatedTo(Movie other) {

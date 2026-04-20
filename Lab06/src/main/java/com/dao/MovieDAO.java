@@ -55,7 +55,7 @@ public class MovieDAO {
     public void remove(Movie movie) throws SQLException {
         String sql = "DELETE FROM movies WHERE id = ?";
         try (Connection conn = getConn();
-             PreparedStatement ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, movie.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -66,14 +66,14 @@ public class MovieDAO {
     public void update(Movie movie) throws SQLException {
 
         String sql = """
-            UPDATE movies 
-            SET title = ?, 
-                release_date = ?, 
-                duration = ?, 
-                score = ?, 
-                genre_id = ? 
-            WHERE id = ?
-            """;
+                UPDATE movies 
+                SET title = ?, 
+                    release_date = ?, 
+                    duration = ?, 
+                    score = ?, 
+                    genre_id = ? 
+                WHERE id = ?
+                """;
 
         try (Connection conn = getConn();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -155,6 +155,7 @@ public class MovieDAO {
         }
         return list;
     }
+
     private Movie mapRow(ResultSet rs) throws SQLException {
         Genre genre = new Genre(rs.getInt("genre_id"), rs.getString("genre_name"));
         Date releaseDate = rs.getDate("release_date");

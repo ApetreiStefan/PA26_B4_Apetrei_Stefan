@@ -22,12 +22,12 @@ import java.util.Map;
 
 /**
  * Imports data from "The Movies Dataset" (available on Kaggle).
- *
+ * <p>
  * Files needed (place in project root, or pass full paths):
- *   movies_metadata.csv  — columns used: id, title, release_date, runtime,
- *                          vote_average, genres
- *   credits.csv          — columns used: id (matches movies_metadata.id), cast
- *
+ * movies_metadata.csv  — columns used: id, title, release_date, runtime,
+ * vote_average, genres
+ * credits.csv          — columns used: id (matches movies_metadata.id), cast
+ * <p>
  * The full dataset has 45 000+ rows. Use the maxRows parameter to limit
  * how many movies are imported during testing.
  */
@@ -39,7 +39,7 @@ public class MovieLensImporter {
 
     // In-memory caches to avoid redundant DB round-trips
     private final Map<String, Genre> genreCache = new HashMap<>();
-    private final Map<String, Actor> actorCache  = new HashMap<>();
+    private final Map<String, Actor> actorCache = new HashMap<>();
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -72,7 +72,9 @@ public class MovieLensImporter {
     //  Private helpers                                                      //
     // ------------------------------------------------------------------ //
 
-    /** Reads movies_metadata.csv and inserts each row. Returns a map of datasetId → dbId. */
+    /**
+     * Reads movies_metadata.csv and inserts each row. Returns a map of datasetId → dbId.
+     */
     private Map<String, Integer> importMovies(String path, int maxRows)
             throws IOException, CsvValidationException, SQLException {
 
@@ -86,13 +88,13 @@ public class MovieLensImporter {
             while ((row = reader.readNext()) != null && count < maxRows) {
                 try {
                     String datasetId = safeGet(row, col, "id");
-                    String title     = safeGet(row, col, "title");
+                    String title = safeGet(row, col, "title");
                     if (title.isBlank() || datasetId.isBlank()) continue;
 
                     LocalDate releaseDate = parseDate(safeGet(row, col, "release_date"));
-                    int       duration    = parseInt(safeGet(row, col, "runtime"));
-                    double    score       = parseDouble(safeGet(row, col, "vote_average"));
-                    Genre     genre       = parseFirstGenre(safeGet(row, col, "genres"));
+                    int duration = parseInt(safeGet(row, col, "runtime"));
+                    double score = parseDouble(safeGet(row, col, "vote_average"));
+                    Genre genre = parseFirstGenre(safeGet(row, col, "genres"));
 
                     Movie movie = movieDAO.create(title, releaseDate, duration, score,
                             genre != null ? genre.getId() : 0);
@@ -111,7 +113,9 @@ public class MovieLensImporter {
         return idMap;
     }
 
-    /** Reads credits.csv and links actors to already-imported movies. */
+    /**
+     * Reads credits.csv and links actors to already-imported movies.
+     */
     private void importCredits(String path, Map<String, Integer> idMap)
             throws IOException, CsvValidationException {
 
@@ -148,8 +152,11 @@ public class MovieLensImporter {
         String name = extractFirstValue(json, "name");
         if (name == null || name.isBlank()) return null;
         return genreCache.computeIfAbsent(name, n -> {
-            try { return genreDAO.create(n); }
-            catch (SQLException e) { throw new RuntimeException(e); }
+            try {
+                return genreDAO.create(n);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -169,7 +176,9 @@ public class MovieLensImporter {
         return names;
     }
 
-    /** Extracts the value of the first occurrence of a key in the JSON-like string. */
+    /**
+     * Extracts the value of the first occurrence of a key in the JSON-like string.
+     */
     private String extractFirstValue(String json, String key) {
         return extractValueAfter(json, key, 0);
     }
@@ -193,7 +202,9 @@ public class MovieLensImporter {
             try {
                 String[] parts = n.split(" ", 2);
                 return actorDAO.create(parts[0], parts.length > 1 ? parts[1] : "");
-            } catch (SQLException e) { throw new RuntimeException(e); }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -212,17 +223,26 @@ public class MovieLensImporter {
     }
 
     private LocalDate parseDate(String s) {
-        try { return LocalDate.parse(s, DATE_FMT); }
-        catch (DateTimeParseException e) { return null; }
+        try {
+            return LocalDate.parse(s, DATE_FMT);
+        } catch (DateTimeParseException e) {
+            return null;
+        }
     }
 
     private int parseInt(String s) {
-        try { return (int) Double.parseDouble(s); }
-        catch (NumberFormatException e) { return 0; }
+        try {
+            return (int) Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     private double parseDouble(String s) {
-        try { return Double.parseDouble(s); }
-        catch (NumberFormatException e) { return 0.0; }
+        try {
+            return Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
     }
 }

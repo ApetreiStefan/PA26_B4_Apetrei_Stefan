@@ -4,7 +4,6 @@ import com.dao.MovieDAO;
 import com.model.Movie;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -14,47 +13,47 @@ public class MovieController {
 
     @GetMapping
     public List<Movie> getMovies() {
-               try{
+        try {
             return movieDAO.findAll();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @PostMapping
-    public void addMovie(@RequestBody Movie movie){
+    public void addMovie(@RequestBody Movie movie) {
         try {
             movieDAO.create(movie.getTitle(), movie.getReleaseDate(), movie.getDuration(), movie.getScore(), movie.getGenre().getId());
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @PatchMapping
-    public void changeMovie(@RequestBody Movie movie){
-        try{
-            if(movieDAO.findById(movie.getId())==null){
+    public void changeMovie(@RequestBody Movie movie) {
+        try {
+            if (movieDAO.findById(movie.getId()) == null) {
                 System.out.println("Nu am gasit filmul cu id" + movie.getId());
                 return;
             }
             movieDAO.update(movie);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
     }
 
     @DeleteMapping
-    public void deleteMovie(@RequestBody Movie movie){
-        try{
-            if(movieDAO.findById(movie.getId())==null){
+    public void deleteMovie(@RequestBody Movie movie) {
+        try {
+            if (movieDAO.findById(movie.getId()) == null) {
                 System.out.println("Nu am gasit filmul cu id" + movie.getId());
                 return;
             }
             movieDAO.remove(movie);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e){e.printStackTrace();}
     }
 }
 // Mai bine ma faceam cioban oare?
