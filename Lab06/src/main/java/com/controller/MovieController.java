@@ -9,7 +9,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
-    MovieDAO movieDAO = new MovieDAO();
+
+    private final MovieDAO movieDAO = new MovieDAO();
 
     @GetMapping
     public List<Movie> getMovies() {
@@ -33,8 +34,8 @@ public class MovieController {
     @PatchMapping
     public void changeMovie(@RequestBody Movie movie) {
         try {
-            if (movieDAO.findById(movie.getId()) == null) {
-                System.out.println("Nu am gasit filmul cu id" + movie.getId());
+            if (movieDAO.findById(movie.getId()).isEmpty()) {
+                System.out.println("Nu am gasit filmul cu id " + movie.getId());
                 return;
             }
             movieDAO.update(movie);
@@ -46,8 +47,8 @@ public class MovieController {
     @DeleteMapping
     public void deleteMovie(@RequestBody Movie movie) {
         try {
-            if (movieDAO.findById(movie.getId()) == null) {
-                System.out.println("Nu am gasit filmul cu id" + movie.getId());
+            if (movieDAO.findById(movie.getId()).isEmpty()) {
+                System.out.println("Nu am gasit filmul cu id " + movie.getId());
                 return;
             }
             movieDAO.remove(movie);
@@ -55,19 +56,19 @@ public class MovieController {
             e.printStackTrace();
         }
     }
+
+    @PutMapping("/{id}")
+    public void updateMovie(@PathVariable int id, @RequestBody Movie movie) {
+        try {
+            movie.setId(id);
+            if (movieDAO.findById(id).isEmpty()) {
+                System.out.println("Nu s-a putut face update: Filmul cu id " + id + " nu exista.");
+                return;
+            }
+            movieDAO.update(movie);
+            System.out.println("Filmul a fost inlocuit cu succes via PUT.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
-// Mai bine ma faceam cioban oare?
-//{
-//        "id": 101,
-//        "title": "Inception",
-//        "releaseDate": "2010-07-16",
-//        "duration": 148,
-//        "score": 8.8,
-//        "genre": {
-//        "id": 1
-//        },
-//        "actors": [
-//        { "id": 5, "name": "Leonardo DiCaprio" },
-//        { "id": 12, "name": "Cillian Murphy" }
-//        ]
-//        }
