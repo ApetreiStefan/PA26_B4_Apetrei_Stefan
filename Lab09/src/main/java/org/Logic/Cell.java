@@ -1,8 +1,9 @@
 package org.Logic;
+import java.io.Serializable;
 
-public class Cell {
-    private final int row;
-    private final int col;
+public class Cell implements Serializable {
+    private static final long serialVersionUID = 1L; // Bună practică pentru serializare
+    private final int row, col;
     private boolean top = true, right = true, bottom = true, left = true;
     private boolean visited = false;
 
