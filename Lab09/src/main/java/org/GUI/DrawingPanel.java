@@ -22,6 +22,10 @@ public class DrawingPanel extends JPanel {
     private int startX;
     private int startY;
 
+    private Thread generationThread;
+    private int currentR = -1;
+    private int currentC = -1;
+
     public DrawingPanel(MainFrame frame) {
         this.frame = frame;
         setBackground(Color.WHITE);
@@ -74,7 +78,19 @@ public class DrawingPanel extends JPanel {
         }
     }
 
+    private void stopGeneration() {
+        if (generationThread != null && generationThread.isAlive()) {
+            generationThread.interrupt();
+            try {
+                generationThread.join(200);
+            } catch (InterruptedException ignored) {}
+        }
+        currentR = -1;
+        currentC = -1;
+    }
+
     public void initGrid(int rows, int columns) {
+        stopGeneration();
         this.rows = rows;
         this.cols = columns;
         grid = new Cell[rows][columns];
@@ -87,6 +103,7 @@ public class DrawingPanel extends JPanel {
     }
 
     public void resetGrid() {
+        stopGeneration();
         if (grid == null) return;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -97,11 +114,13 @@ public class DrawingPanel extends JPanel {
     }
 
     public void createMazeRandom() {
+        stopGeneration();
         if (grid == null) return;
         resetGrid();
         Random random = new Random();
         for (int nr = 0; nr < rows; nr++) {
             for (int nc = 0; nc < cols; nc++) {
+                grid[nr][nc].setVisited(true);
                 boolean wall = random.nextBoolean() ^ random.nextBoolean();
                 grid[nr][nc].setTop(wall);
                 if (nr > 0) grid[nr - 1][nc].setBottom(wall);
@@ -115,14 +134,35 @@ public class DrawingPanel extends JPanel {
     }
 
     public void createMazeDFS() {
+        stopGeneration();
         if (grid == null) return;
         resetGrid();
-        generateMazeDFS(0, 0);
-        repaint();
+        
+        generationThread = new Thread(() -> {
+            try {
+                generateMazeDFS(0, 0);
+            } catch (InterruptedException e) {
+                // Interrupted, stop generation
+            } finally {
+                currentR = -1;
+                currentC = -1;
+                SwingUtilities.invokeLater(this::repaint);
+            }
+        });
+        generationThread.start();
     }
 
-    private void generateMazeDFS(int r, int c) {
+    private void generateMazeDFS(int r, int c) throws InterruptedException {
         grid[r][c].setVisited(true);
+        currentR = r;
+        currentC = c;
+        SwingUtilities.invokeLater(this::repaint);
+
+        int delay = frame.getConfigPanel().getDelay();
+        if (delay > 0) {
+            Thread.sleep(delay);
+        }
+
         int[] dr = {-1, 0, 1, 0};
         int[] dc = {0, 1, 0, -1};
 
@@ -138,7 +178,15 @@ public class DrawingPanel extends JPanel {
                 else if (dir == 1) { grid[r][c].setRight(false); grid[nr][nc].setLeft(false); }
                 else if (dir == 2) { grid[r][c].setBottom(false); grid[nr][nc].setTop(false); }
                 else if (dir == 3) { grid[r][c].setLeft(false); grid[nr][nc].setRight(false); }
+                
                 generateMazeDFS(nr, nc);
+                
+                currentR = r;
+                currentC = c;
+                SwingUtilities.invokeLater(this::repaint);
+                if (delay > 0) {
+                    Thread.sleep(delay);
+                }
             }
         }
     }
@@ -200,7 +248,13 @@ public class DrawingPanel extends JPanel {
                 int y = startY + i * cellSize;
                 Cell cell = grid[i][j];
 
-                g2.setColor(new Color(245, 245, 245));
+                if (i == currentR && j == currentC) {
+                    g2.setColor(new Color(255, 100, 100)); // Active cell (reddish)
+                } else if (cell.isVisited()) {
+                    g2.setColor(new Color(245, 245, 245)); // Visited
+                } else {
+                    g2.setColor(new Color(200, 200, 200)); // Unvisited
+                }
                 g2.fillRect(x, y, cellSize, cellSize);
 
                 g2.setColor(Color.BLACK);
