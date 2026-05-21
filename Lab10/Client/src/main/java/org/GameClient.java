@@ -8,41 +8,59 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-class GameClient {
+public class GameClient {
+    private static final String HOST = "localhost";
+    private static final int PORT = 8100;
+    private boolean running = true;
 
-    public void run() throws IOException {
-        try (
-                Socket socket = new Socket("localhost", 8100);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                Scanner scanner = new Scanner(System.in)) {
-            
-            System.out.println("Client connected to server");
-            
-            while (true) {
-                String command = scanner.nextLine();
-                if ("exit".equalsIgnoreCase(command)) {
-                    break;
+    public void run() {
+        try (Socket socket = new Socket(HOST, PORT);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             Scanner scanner = new Scanner(System.in)) {
+
+            System.out.println("Connected to the Game Server!");
+            System.out.println("Available commands: join [name], start, answer [index], exit, stop");
+
+            // Thread for listening to server messages
+            Thread listenerThread = new Thread(() -> {
+                try {
+                    String response;
+                    while (running && (response = in.readLine()) != null) {
+                        System.out.println("\n[Server]: " + response);
+                        System.out.print("> ");
+                    }
+                } catch (IOException e) {
+                    if (running) {
+                        System.err.println("Connection lost: " + e.getMessage());
+                    }
                 }
-                
-                out.println(command);
-                out.flush();
-                
-                String response = in.readLine();
-                if (response == null) {
-                    System.out.println("Connection closed by server.");
-                    break;
-                }
-                System.out.println(response);
-                
-                if ("stop".equalsIgnoreCase(command)) {
-                    break;
+            });
+            listenerThread.start();
+
+            // Main thread for sending commands
+            while (running) {
+                System.out.print("> ");
+                if (scanner.hasNextLine()) {
+                    String command = scanner.nextLine();
+                    if ("exit".equalsIgnoreCase(command)) {
+                        running = false;
+                        out.println(command);
+                        break;
+                    }
+                    out.println(command);
+                    if ("stop".equalsIgnoreCase(command)) {
+                        running = false;
+                        break;
+                    }
                 }
             }
+
+            listenerThread.join(1000);
         } catch (UnknownHostException e) {
-            System.out.println("Server not found: " + e.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Server not found: " + e.getMessage());
+        } catch (IOException | InterruptedException e) {
+            System.err.println("I/O Error: " + e.getMessage());
         }
     }
-}
+}
