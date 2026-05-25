@@ -90,4 +90,58 @@ public class ClassMethodInvoker {
             System.out.println("Return value: void");
         }
     }
+
+    /**
+     * Invokes methods annotated with specific annotations.
+     * Handles methods with 0 arguments, or 1 integer argument (using a mock value).
+     *
+     * @param clazz The class to inspect and invoke methods on.
+     * @param targetAnnotations Set of annotation class names to look for.
+     */
+    public static void invokeAnnotatedMethods(Class<?> clazz, java.util.Set<String> targetAnnotations) {
+        Method[] methods = clazz.getDeclaredMethods();
+        Object instance = null;
+        boolean instanceCreated = false;
+
+        for (Method method : methods) {
+            boolean hasTargetAnno = false;
+            for (java.lang.annotation.Annotation anno : method.getDeclaredAnnotations()) {
+                if (targetAnnotations.contains(anno.annotationType().getName())) {
+                    hasTargetAnno = true;
+                    break;
+                }
+            }
+
+            if (!hasTargetAnno) continue;
+
+            method.setAccessible(true);
+            boolean isStatic = Modifier.isStatic(method.getModifiers());
+            Class<?>[] paramTypes = method.getParameterTypes();
+
+            if (paramTypes.length == 0 || (paramTypes.length == 1 && (paramTypes[0] == int.class || paramTypes[0] == Integer.class))) {
+                try {
+                    if (!isStatic && !instanceCreated) {
+                        Constructor<?> constructor = clazz.getDeclaredConstructor();
+                        constructor.setAccessible(true);
+                        instance = constructor.newInstance();
+                        instanceCreated = true;
+                    }
+
+                    Object target = isStatic ? null : instance;
+                    Object[] args = new Object[paramTypes.length];
+                    if (paramTypes.length == 1) {
+                        args[0] = 42; // Mock value
+                    }
+
+                    System.out.println("Invoking annotated method: " + method.getName() + " with args: " + java.util.Arrays.toString(args));
+                    method.invoke(target, args);
+                    
+                } catch (Exception e) {
+                    System.err.println("Failed to invoke method " + method.getName() + ": " + e.getCause());
+                }
+            } else {
+                System.out.println("Skipping annotated method " + method.getName() + " (Unsupported parameters)");
+            }
+        }
+    }
 }

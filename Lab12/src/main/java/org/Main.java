@@ -10,6 +10,9 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import org.reflection.BytecodeInstrumenter;
+import org.reflection.CompilerUtil;
 
 /**
  * Loads unknown Java classes and invokes their parameterless 'run' methods.
@@ -24,9 +27,14 @@ public class Main {
         try {
             if (args.length > 0) {
                 // Command Line Mode
-                String classFilePath = args[0];
-                String knownPackage = args.length > 1 ? args[1] : null;
-                processClassFile(classFilePath, knownPackage);
+                File inputFile = new File(args[0]);
+                if (inputFile.isDirectory()) {
+                    processDirectoryMode(inputFile);
+                } else {
+                    String classFilePath = args[0];
+                    String knownPackage = args.length > 1 ? args[1] : null;
+                    processClassFile(classFilePath, knownPackage);
+                }
             } else {
                 // Interactive Mode
                 runInteractiveMode();
@@ -35,6 +43,36 @@ public class Main {
             System.err.println("\n[FATAL ERROR] An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Processes a directory: compiles .java files, instruments classes, and runs annotated methods.
+     */
+    private static void processDirectoryMode(File dir) throws Exception {
+        System.out.println("\n--- Processing Directory Mode ---");
+        System.out.println("Directory: " + dir.getAbsolutePath());
+        
+        // 1. Compile .java files
+        CompilerUtil.compileJavaFiles(dir);
+
+        // 2. Instrument and Load Classes using Javassist
+        BytecodeInstrumenter instrumenter = new BytecodeInstrumenter(dir.getAbsolutePath());
+        instrumenter.processDirectory(dir);
+
+        List<Class<?>> classes = instrumenter.getInstrumentedClasses();
+        Set<String> annotations = instrumenter.getAnnotationClassNames();
+
+        System.out.println("\nSummary: Discovered " + annotations.size() + " annotation(s) and instrumented/loaded " + classes.size() + " public class(es).");
+
+        for (Class<?> clazz : classes) {
+            // Display prototype
+            ClassInspector.inspect(clazz);
+
+            // Invoke annotated methods
+            System.out.println("\nInvoking annotated methods for " + clazz.getName() + "...");
+            ClassMethodInvoker.invokeAnnotatedMethods(clazz, annotations);
+        }
+        System.out.println("--- Directory Processing Complete ---\n");
     }
 
     /**
